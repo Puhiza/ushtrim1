@@ -1,10 +1,12 @@
-from flask import Flask, request, render_template
+from flask import Flask, request
+
 app = Flask(__name__)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         try:
-            user_input = request.form['user_input']  # Kontrollo për 'user_input'
+            user_input = request.form['user_input']
             return f"Teksti i dërguar: {user_input}"
         except KeyError:
             return "Gabim: 'user_input' nuk u gjet në formular."
@@ -14,5 +16,6 @@ def index():
         <button type="submit">Dërgo</button>
     </form>
     '''
+
 if __name__ == "__main__":
     app.run(debug=True)
