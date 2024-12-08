@@ -8,6 +8,10 @@ strategy:
   matrix:
     Python310:
       python.version: '3.10'
+    Python311:
+      python.version: '3.11'
+    Python312:
+      python.version: '3.12'
 
 steps:
 - task: UsePythonVersion@0
@@ -21,12 +25,5 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    python app00.py &
-    sleep 5
-    curl http://127.0.0.1:5000
-  displayName: 'Run Flask application and check'
-
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'Run pytest'
+    pytest test_app.py
+  displayName: 'Run tests'
