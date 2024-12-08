@@ -1,41 +1,32 @@
 trigger:
-- main  # Trigger për degën kryesore (main)
+- main
 
 pool:
-  vmImage: ubuntu-latest  # Po përdorim një imazh të gatshëm për Linux (Ubuntu)
+  vmImage: ubuntu-latest
 
 strategy:
   matrix:
-    Python38:
-      python.version: '3.8'  # Versioni i Python që do të përdorim për ndërtimin
-    Python39:
-      python.version: '3.9'
     Python310:
       python.version: '3.10'
-    Python311:
-      python.version: '3.11'
 
 steps:
-# Përdorim versionin përkatës të Python
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '$(python.version)'  # Përdorim versionin e përcaktuar në matrix
+    versionSpec: '$(python.version)'
   displayName: 'Use Python $(python.version)'
 
-# Hapi për të instaluar varësitë nga requirements.txt
 - script: |
-    python -m pip install --upgrade pip  # Përditësojmë pip
-    pip install -r requirements.txt  # Instalohet varësitë nga requirements.txt
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-# Hapi për të ekzekutuar testet me pytest
 - script: |
-    pip install pytest pytest-azurepipelines  # Instaloni pytest dhe paketën për Azure Pipelines
-    pytest  # Ekzekutojmë testet
-  displayName: 'Run pytest'
+    python app00.py &
+    sleep 5
+    curl http://127.0.0.1:5000
+  displayName: 'Run Flask application and check'
 
-# Opsionale: Hapi për të dërguar në PyPI, nëse doni të publikoni aplikacionin
 - script: |
-    python setup.py sdist bdist_wheel  # Krijoni paketën për shpërndarje
-    python -m twine upload dist/*  # Dërgo paketën në PyPI
-  displayName: 'Publish to PyPI'
+    pip install pytest pytest-azurepipelines
+    pytest
+  displayName: 'Run pytest'
