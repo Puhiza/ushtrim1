@@ -2,10 +2,10 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
   name: azureagent
   demands:
-  - Agent.Version -gtVersion >= 2.163.1
+  - Agent.Version -gtVersion 2.163.1
 
 strategy:
   matrix:
