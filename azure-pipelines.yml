@@ -4,6 +4,8 @@ trigger:
 pool:
   vmImage: ubuntu-latest
   name: azureagent
+  demands:
+  - Agent.Version -gtVersion >= 2.163.1
 
 strategy:
   matrix:
