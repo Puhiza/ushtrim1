@@ -3,6 +3,7 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  name: azureagent
 
 strategy:
   matrix:
